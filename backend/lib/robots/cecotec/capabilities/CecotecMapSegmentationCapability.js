@@ -1,3 +1,4 @@
+const Logger = require("../../../Logger");
 const MapSegmentationCapability = require("../../../core/capabilities/MapSegmentationCapability");
 
 /**
@@ -22,12 +23,20 @@ class CecotecMapSegmentationCapability extends MapSegmentationCapability {
             throw new Error("There is no map in connected robot");
         }
 
+        
+        Logger.info(`Segments: ${segments}`);
+
         const segmentIds = segments.map(segment => {
-            return String(segment.id);
+            return segment.id.toString();
         });
+
+        Logger.info(`1. Segment IDs: ${segmentIds}`);
+
         const rooms = map.rooms.filter(room => {
             return segmentIds.includes(room.id.toString());
         });
+        Logger.info(`2. Segment IDs: ${segmentIds}`);
+        Logger.info(`Executing segment action for rooms: ${rooms}`);
 
         await this.robot.robot.cleanRooms(rooms);
     }

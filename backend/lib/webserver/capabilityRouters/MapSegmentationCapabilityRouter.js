@@ -33,6 +33,7 @@ class MapSegmentationCapabilityRouter extends CapabilityRouter {
 
                         res.sendStatus(200);
                     } catch (e) {
+                        console.error(e);
                         this.sendErrorResponse(req, res, e);
                     }
                 } else {
